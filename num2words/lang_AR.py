@@ -31,6 +31,10 @@ CURRENCY_EGP = [("جنيه", "جنيهان", "جنيهات", "جنيهاً"),
                 ("قرش", "قرشان", "قروش", "قرش")]
 CURRENCY_KWD = [("دينار", "ديناران", "دينارات", "ديناراً"),
                 ("فلس", "فلسان", "فلس", "فلس")]
+CURRENCY_YER = [("ريال", "ريالان", "ريالات", "ريالاً"),
+			   ("فلس", "فلسان", "فلس", "فلس")]
+CURRENCY_USD = [("دولار", "دولارين", "دولارات", "دولاراً"),
+			   ("سنت", "سنتان", "سنتا", "سنتاٌ")]
 
 ARABIC_ONES = [
     "", "واحد", "اثنان", "ثلاثة", "أربعة", "خمسة", "ستة", "سبعة", "ثمانية",
@@ -54,8 +58,8 @@ class Num2Word_AR(Num2Word_Base):
         self.integer_value = 0
         self._decimalValue = ""
         self.partPrecision = 2
-        self.currency_unit = CURRENCY_SR[0]
-        self.currency_subunit = CURRENCY_SR[1]
+        self.currency_unit = CURRENCY_USD[0]
+        self.currency_subunit = CURRENCY_USD[1]
         self.isCurrencyPartNameFeminine = True
         self.isCurrencyNameFeminine = False
         self.separator = 'و'
@@ -352,17 +356,26 @@ class Num2Word_AR(Num2Word_Base):
         return number
 
     def set_currency_prefer(self, currency):
-        if currency == 'EGP':
+        if currency == 'YER':
+            self.currency_unit = CURRENCY_YER[0]
+            self.currency_subunit = CURRENCY_YER[1]
+        elif  currency == 'USD':
+            self.currency_unit = CURRENCY_USD[0]
+            self.currency_subunit = CURRENCY_USD[1]
+        elif currency == 'EGP':
             self.currency_unit = CURRENCY_EGP[0]
             self.currency_subunit = CURRENCY_EGP[1]
         elif currency == 'KWD':
             self.currency_unit = CURRENCY_KWD[0]
             self.currency_subunit = CURRENCY_KWD[1]
-        else:
+        elif currency == 'SR':
             self.currency_unit = CURRENCY_SR[0]
             self.currency_subunit = CURRENCY_SR[1]
+        else:
+            self.currency_unit = CURRENCY_USD[0]
+            self.currency_subunit = CURRENCY_USD[1]
 
-    def to_currency(self, value, currency='SR', prefix='', suffix=''):
+    def to_currency(self, value, currency='USD', prefix='', suffix=''):
         self.set_currency_prefer(currency)
         self.isCurrencyNameFeminine = False
         self.separator = "و"
