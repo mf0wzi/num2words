@@ -53,18 +53,18 @@ from __future__ import print_function, unicode_literals
 import os
 import sys
 from docopt import docopt
-import num2words
+import smepsnum2words
 
 __version__ = "0.5.13"
 __license__ = "LGPL"
 
 
 def get_languages():
-    return sorted(list(num2words.CONVERTER_CLASSES.keys()))
+    return sorted(list(smepsnum2words.CONVERTER_CLASSES.keys()))
 
 
 def get_converters():
-    return sorted(list(num2words.CONVERTES_TYPES))
+    return sorted(list(smepsnum2words.CONVERTES_TYPES))
 
 
 def main():
@@ -81,7 +81,7 @@ def main():
             sys.stdout.write(os.linesep)
         sys.exit(0)
     try:
-        words = num2words.num2words(args['<number>'], lang=args['--lang'], to=args['--to'])
+        words = smepsnum2words.num2words(args['<number>'], lang=args['--lang'], to=args['--to'])
         sys.stdout.write(words + os.linesep)
         sys.exit(0)
     except Exception as err:
